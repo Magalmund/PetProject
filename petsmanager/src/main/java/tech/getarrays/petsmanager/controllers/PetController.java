@@ -1,4 +1,4 @@
-package tech.getarrays.petsmanager;
+package tech.getarrays.petsmanager.controllers;
 
 
 import org.springframework.http.HttpStatus;
@@ -12,10 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/pet")
 @CrossOrigin
-public class PetResource {
+public class PetController {
     private final PetService petService;
 
-    public PetResource(PetService petService) {
+    public PetController(PetService petService) {
         this.petService = petService;
     }
 
@@ -23,12 +23,6 @@ public class PetResource {
     public ResponseEntity<List<Pet>> getAllPets () {
        List<Pet> pets = petService.findAllPets();
        return new ResponseEntity<>(pets, HttpStatus.OK);
-    }
-
-    @GetMapping("/find/{id}")
-    public ResponseEntity<Pet> getPetById (@PathVariable("id") Long id) {
-        Pet pet = petService.findPetById(id);
-        return new ResponseEntity<>(pet, HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -41,12 +35,6 @@ public class PetResource {
     public ResponseEntity<Pet> updatePet(@RequestBody Pet pet){
         Pet updatePet = petService.updatePet(pet);
         return new ResponseEntity<>(updatePet, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deletePet(@PathVariable("id") Long id){
-        petService.deletePet(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

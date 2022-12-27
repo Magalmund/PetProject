@@ -1,9 +1,16 @@
 package tech.getarrays.petsmanager.model;
 
-//import java.util.Date;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "Pets")
 public class Pet {
@@ -17,7 +24,6 @@ public class Pet {
     private String color;
     private String country;
 
-    public Pet(){}
 
     public Pet(String petName, String petCode, String type, String color, String country) {
         this.petName = petName;
@@ -27,63 +33,4 @@ public class Pet {
         this.country = country;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPetName() {
-        return petName;
-    }
-
-    public void setPetName(String petName) {
-        this.petName = petName;
-    }
-
-    public String getPetCode() {
-        return petCode;
-    }
-
-    public void setPetCode(String petCode) {
-        this.petCode = petCode;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    @Override
-    public String toString() {
-        return "Pet{" +
-                "id=" + id +
-                ", petName='" + petName + '\'' +
-                ", petCode='" + petCode + '\'' +
-                ", type='" + type + '\'' +
-                ", color='" + color + '\'' +
-                ", country='" + country + '\'' +
-                '}';
-    }
 }

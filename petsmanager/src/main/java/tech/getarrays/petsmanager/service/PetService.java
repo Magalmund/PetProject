@@ -1,25 +1,19 @@
 package tech.getarrays.petsmanager.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import tech.getarrays.petsmanager.exception.UserNotFoundException;
 import tech.getarrays.petsmanager.model.Pet;
 import tech.getarrays.petsmanager.repository.PetRepo;
 
 import java.util.List;
-//import java.util.UUID;
+import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class PetService {
     private final PetRepo petRepo;
 
-    @Autowired
-    public PetService(PetRepo petRepo) {
-        this.petRepo = petRepo;
-    }
-
     public Pet addPet(Pet pet) {
-//        pet.setPetCode(UUID.randomUUID().toString());
         return petRepo.save(pet);
     }
 
@@ -28,16 +22,10 @@ public class PetService {
     }
 
     public Pet updatePet(Pet pet){
+        Optional<Pet> petById = petRepo.findPetById(pet.getId());
+        if(petById.isEmpty()){
+            throw new IllegalArgumentException("This Pet doesn't exist");
+        }
         return petRepo.save(pet);
     }
-
-    public Pet findPetById(Long id){
-        return petRepo.findPetById(id).orElseThrow(() -> new UserNotFoundException("User by id " + id + "was not found"));
-    }
-
-    public void deletePet(Long id) {
-        petRepo.deletePetById(id);
-    }
-
-
 }

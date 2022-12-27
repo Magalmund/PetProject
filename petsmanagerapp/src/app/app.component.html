@@ -1,10 +1,10 @@
-<div class="container">
+<div id="main-container" class="container">
   <div class="py-5 text-center">
     <h2>Pets</h2>
   </div>
 
   <div class="row">
-    <a href="add.html" class="btn btn-primary">Add pet</a>
+    <button class="btn btn-primary" (click)="onOpenModal(null!, 'add')">Add pet</button>
     <table class="table">
       <thead>
       <tr>
@@ -15,21 +15,239 @@
         <th scope="col">Fur color</th>
         <th scope="col">Country</th>
         <th></th>
+        <th></th>
       </tr>
       </thead>
-      <tbody *ngFor="let pet of pets">
+      <tbody *ngFor="let pet of pets;index as i">
       <tr>
-        <th scope="row">{{pet.id}}</th>
+        <th scope="row">{{i + 1}}</th>
         <td>{{pet.petName}}</td>
         <td>{{pet.petCode}}</td>
         <td>{{pet.type}}</td>
         <td>{{pet.color}}</td>
         <td>{{pet.country}}</td>
         <td>
-          <a href="add.html" class="btn btn-primary">Edit pet</a>
+          <button class="btn btn-primary" (click)="onOpenModal(pet, 'edit')">Edit pet</button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
+
+
+  <!--   Add Modal-->
+  <div class="modal fade" id="addPetModal" tabindex="-1" aria-labelledby="addPetModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addPetModalLabel">Add pet</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddPet(addForm)" [formGroup]="reactiveForm" class="needs-validation"
+                novalidate>
+
+            <div class="mb-3">
+              <label for="petName">Name</label>
+              <div class="input-group">
+                <input type="text" formControlName="petName" name="petName" class="form-control" id="petName"
+                       placeholder="Pet name" required>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="!reactiveForm.get('petName').valid && reactiveForm.get('petName').touched"
+                >
+                  4 to 15 characters.<br/>
+                  Must begin with a letter.<br/>
+                  Letters and space between words is allowed.
+                </div>
+              </div>
+
+              <label for="petCode">Code</label>
+              <div class="input-group">
+                <input type="text" formControlName="petCode" name="petCode" class="form-control" id="petCode"
+                       placeholder="Code" required>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="!reactiveForm.get('petCode').valid && reactiveForm.get('petCode').touched"
+                >
+                  Length of Pet code must be 12 characters.<br/>
+                  Only numbers is allowed.
+                </div>
+              </div>
+
+              <label for="type">Type</label>
+              <select (change)="changeType($event)" formControlName="type" name="type"
+                      class="custom-select d-block w-100" id="type" required>
+                <option value="">Choose...</option>
+                <option *ngFor="let type of Type" ngValue="type">{{type}}</option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="!reactiveForm.get('type').valid && reactiveForm.get('type').touched"
+              >
+                Please select a valid state.
+              </div>
+
+
+              <label for="color">Fur color</label>
+              <select formControlName="color" name="color" class="custom-select d-block w-100" id="color" required>
+                <option value="">Choose...</option>
+                <option>Black</option>
+                <option>White</option>
+                <option>Brown</option>
+                <option>Yellow</option>
+                <option>Blue</option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="!reactiveForm.get('color').valid && reactiveForm.get('color').touched"
+              >
+                Please select a valid state.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="country">Country of origin</label>
+              <select formControlName="country" name="country" class="custom-select d-block w-100" id="country"
+                      required>
+                <option value="">Choose...</option>
+                <option>Estonia</option>
+                <option>Latvia</option>
+                <option>Lithuania</option>
+                <option>Finland</option>
+                <option>Sweden</option>
+                <option>Norway</option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="!reactiveForm.get('country').valid && reactiveForm.get('country').touched"
+              >
+                Please select a valid state.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="add-pet-form" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button [disabled]="addForm.invalid" class="btn btn-primary" type="submit">Add Pet</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--   Edit Modal -->
+  <div class="modal fade" id="updatePetModal" tabindex="-1" role="dialog" aria-labelledby="petEditModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="updatePetModalLabel">Edit pet</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm" (ngSubmit)="onUpdatePet(editForm.value)" [formGroup]="reactiveForm"
+                class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="name">Name</label>
+              <div class="input-group">
+                <input formControlName="petName" name="petName" type="text" class="form-control" id="name"
+                       placeholder="Name" required>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="!reactiveForm.get('petName').valid && reactiveForm.get('petName').touched"
+                >
+                  4 to 15 characters.<br/>
+                  Must begin with a letter.<br/>
+                  Letters and space between words is allowed.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="code">Code</label>
+              <div class="input-group">
+                <input formControlName="petCode" name="petCode" type="text" class="form-control" id="code"
+                       placeholder="Code" required>
+                <div
+                  class="invalid-feedback"
+                  *ngIf="!reactiveForm.get('petCode').valid && reactiveForm.get('petCode').touched"
+                >
+                  Length of Pet code must be 12 characters.<br/>
+                  Only numbers is allowed.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="types">Type</label>
+              <select formControlName="type" name="type" class="custom-select d-block w-100" id="types" required>
+                <option value="">Choose...</option>
+                <option>Cat</option>
+                <option>Dog</option>
+                <option>Horse</option>
+                <option>Rabbit</option>
+                <option>Parrot</option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="!reactiveForm.get('type').valid && reactiveForm.get('type').touched"
+              >
+                Please select a valid state.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="colors">Fur color</label>
+              <select formControlName="color" name="color" class="custom-select d-block w-100" id="colors" required>
+                <option value="">Choose...</option>
+                <option>Black</option>
+                <option>White</option>
+                <option>Brown</option>
+                <option>Yellow</option>
+                <option>Blue</option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="!reactiveForm.get('color').valid && reactiveForm.get('color').touched"
+              >
+                Please select a valid state.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="countries">Country of origin</label>
+              <select formControlName="country" name="country" class="custom-select d-block w-100" id="countries"
+                      required>
+                <option value="">Choose...</option>
+                <option>Estonia</option>
+                <option>Latvia</option>
+                <option>Lithuania</option>
+                <option>Finland</option>
+                <option>Sweden</option>
+                <option>Norway</option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="!reactiveForm.get('country').valid && reactiveForm.get('country').touched"
+              >
+                Please select a valid state.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="edit-pet-form" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button [disabled]="editForm.invalid" class="btn btn-primary" type="submit">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
+
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+input.ng-invalid.ng-touched {
+  border: red 1px solid;
+}
+#addPetModal .invalid-feedback, #updatePetModal .invalid-feedback{display:block}
