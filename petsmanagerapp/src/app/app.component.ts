@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   }
 
   /*TYPE VALIDATOR*/
-  Type: any = ['Cat', 'Dog', 'Horse', 'Rabbit', 'Parrot']
+  // Type: any = ['Cat', 'Dog', 'Horse', 'Rabbit', 'Parrot']
 
   /*TYPE VALIDATOR END*/
 
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
     this.getPets();
 
     this.reactiveForm = new FormGroup({
+      id: new FormControl(),
       petName: new FormControl(null, [Validators.required, RegexNameValidator(RegexName.NAME_REGEX), Validators.minLength(3), Validators.maxLength(15)]),
       petCode: new FormControl(null, [Validators.required, RegexCodeValidator(RegexCode.CODE_REGEX), Validators.minLength(12), Validators.maxLength(12)]),
       type: new FormControl(null, Validators.required),
@@ -37,13 +38,20 @@ export class AppComponent implements OnInit {
   }
 
   /*SELECTOR FIELD VALIDATION*/
-  changeType(e) {
-    console.log(e.value)
-    this.reactiveForm.get('type').setValue(e.target.value, {
-      onlySelf: true
-    })
-  }
+  // changeType(e) {
+  //   console.log(e.value)
+  //   this.reactiveForm.get("type").setValue(e.target.value, {
+  //     onlySelf: true
+  //   })
+  // }
 
+  // CountryOptions = {
+  //   default: 'Choose...',
+  //   latvia: 'Latvia',
+  //   estonia: 'Estonia',
+  //   finland: 'Finland'
+  // };
+  // selectedCountry = this.CountryOptions.default
   /*SELECTOR FIELD VALIDATION END*/
 
   public getPets(): void {
@@ -77,6 +85,7 @@ export class AppComponent implements OnInit {
 
   public onUpdatePet(pet: Pet): void {
     document.getElementById('edit-pet-form').click();
+    console.log(pet)
     this.petServices.updatePet(pet).subscribe(
       (response: Pet) => {
         console.log(response);
@@ -96,22 +105,23 @@ export class AppComponent implements OnInit {
     button.setAttribute('data-bs-toggle', 'modal');
     if (mode === 'add') {
       button.setAttribute('data-bs-target', '#addPetModal');
+      Object.keys(this.reactiveForm.controls).forEach((key: string) => {
+        this.reactiveForm.get(key).setValue(null);
+      })
     }
     if (mode === 'edit') {
       this.editPet = pet;
 
-      // Object.keys(this.reactiveForm.controls).forEach((key: string) => {
-      //   this.reactiveForm.get[key].setValue(this.editPet[key]);
-      // })
-      this.reactiveForm.get('petName').setValue(this.editPet.petName);
-      this.reactiveForm.get('petCode').setValue(this.editPet.petCode);
-      this.reactiveForm.get('type').setValue(this.editPet.type);
-      this.reactiveForm.get('color').setValue(this.editPet.color);
-      this.reactiveForm.get('country').setValue(this.editPet.country);
+      Object.keys(this.reactiveForm.controls).forEach((key: string) => {
+        this.reactiveForm.get(key).setValue(this.editPet[key]);
+      })
       button.setAttribute('data-bs-target', '#updatePetModal');
     }
     container!.appendChild(button);
     button.click();
   }
+
+
+
 }
 

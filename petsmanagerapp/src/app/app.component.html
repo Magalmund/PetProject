@@ -76,11 +76,20 @@
               </div>
 
               <label for="type">Type</label>
-              <select (change)="changeType($event)" formControlName="type" name="type"
-                      class="custom-select d-block w-100" id="type" required>
+              <!--              <select (change)="changeType($event)" formControlName="type" name="type"-->
+              <!--                      class="custom-select d-block w-100" id="type" required>-->
+              <!--                <option value="">Choose...</option>-->
+              <!--                <option *ngFor="let type of Type" ngValue="type">{{type}}</option>-->
+              <!--              </select>-->
+              <select formControlName="type" name="type" class="custom-select d-block w-100" id="type" required>
                 <option value="">Choose...</option>
-                <option *ngFor="let type of Type" ngValue="type">{{type}}</option>
+                <option>Cat</option>
+                <option>Dog</option>
+                <option>Horse</option>
+                <option>Rabbit</option>
+                <option>Parrot</option>
               </select>
+
               <div
                 class="invalid-feedback"
                 *ngIf="!reactiveForm.get('type').valid && reactiveForm.get('type').touched"
@@ -110,7 +119,7 @@
               <label for="country">Country of origin</label>
               <select formControlName="country" name="country" class="custom-select d-block w-100" id="country"
                       required>
-                <option value="">Choose...</option>
+                <option>Choose...</option>
                 <option>Estonia</option>
                 <option>Latvia</option>
                 <option>Lithuania</option>
@@ -147,6 +156,7 @@
         <div class="modal-body">
           <form #editForm="ngForm" (ngSubmit)="onUpdatePet(editForm.value)" [formGroup]="reactiveForm"
                 class="needs-validation" novalidate>
+            <input type="hidden" formControlName="id" name="id" class="form-control" id="id">
             <div class="mb-3">
               <label for="name">Name</label>
               <div class="input-group">
@@ -234,7 +244,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" id="edit-pet-form" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button  type="button" id="edit-pet-form" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button [disabled]="editForm.invalid" class="btn btn-primary" type="submit">Update</button>
             </div>
           </form>
