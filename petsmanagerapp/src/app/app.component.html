@@ -76,18 +76,8 @@
               </div>
 
               <label for="type">Type</label>
-              <!--              <select (change)="changeType($event)" formControlName="type" name="type"-->
-              <!--                      class="custom-select d-block w-100" id="type" required>-->
-              <!--                <option value="">Choose...</option>-->
-              <!--                <option *ngFor="let type of Type" ngValue="type">{{type}}</option>-->
-              <!--              </select>-->
               <select formControlName="type" name="type" class="custom-select d-block w-100" id="type" required>
-                <option value="">Choose...</option>
-                <option>Cat</option>
-                <option>Dog</option>
-                <option>Horse</option>
-                <option>Rabbit</option>
-                <option>Parrot</option>
+                <option *ngFor="let type of types">{{type.type}}</option>
               </select>
 
               <div
@@ -97,15 +87,9 @@
                 Please select a valid state.
               </div>
 
-
               <label for="color">Fur color</label>
               <select formControlName="color" name="color" class="custom-select d-block w-100" id="color" required>
-                <option value="">Choose...</option>
-                <option>Black</option>
-                <option>White</option>
-                <option>Brown</option>
-                <option>Yellow</option>
-                <option>Blue</option>
+                <option *ngFor="let color of colors">{{color.color}}</option>
               </select>
               <div
                 class="invalid-feedback"
@@ -119,13 +103,7 @@
               <label for="country">Country of origin</label>
               <select formControlName="country" name="country" class="custom-select d-block w-100" id="country"
                       required>
-                <option>Choose...</option>
-                <option>Estonia</option>
-                <option>Latvia</option>
-                <option>Lithuania</option>
-                <option>Finland</option>
-                <option>Sweden</option>
-                <option>Norway</option>
+                <option *ngFor="let country of countries">{{country.country}}</option>
               </select>
               <div
                 class="invalid-feedback"
@@ -244,7 +222,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button  type="button" id="edit-pet-form" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" id="edit-pet-form" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button [disabled]="editForm.invalid" class="btn btn-primary" type="submit">Update</button>
             </div>
           </form>

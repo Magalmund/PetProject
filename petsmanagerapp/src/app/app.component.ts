@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Pet} from "./pet";
+import {Color, Country, Pet, Type} from "./pet";
 import {HttpErrorResponse} from "@angular/common/http";
 import {PetService} from "./pet.service";
 import {FormControl, FormGroup, FormGroupDirective, Validators} from "@angular/forms";
@@ -13,19 +13,20 @@ import {RegexNameValidator, RegexName, RegexCodeValidator, RegexCode} from "./re
 
 export class AppComponent implements OnInit {
   public pets: Pet[];
+  public colors: Color[];
+  public countries: Country[];
+  public types: Type[];
   public editPet: Pet;
   reactiveForm: FormGroup;
 
   constructor(private petServices: PetService) {
   }
 
-  /*TYPE VALIDATOR*/
-  // Type: any = ['Cat', 'Dog', 'Horse', 'Rabbit', 'Parrot']
-
-  /*TYPE VALIDATOR END*/
-
   ngOnInit(): void {
     this.getPets();
+    this.getColors();
+    this.getCountries();
+    this.getTypes();
 
     this.reactiveForm = new FormGroup({
       id: new FormControl(),
@@ -65,14 +66,43 @@ export class AppComponent implements OnInit {
     );
   }
 
+  public getColors(): void {
+    this.petServices.getColors().subscribe(
+      (response: Color[]) => {
+        this.colors = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    );
+  }
+
+  public getCountries(): void {
+    this.petServices.getCountries().subscribe(
+      (response: Country[]) => {
+        this.countries = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    );
+  }
+
+  public getTypes(): void {
+    this.petServices.getTypes().subscribe(
+      (response: Type[]) => {
+        this.types = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message)
+      }
+    );
+  }
+
   public onAddPet(addForm: FormGroupDirective): void {
-
-    console.log(this.reactiveForm);
-
     document.getElementById('add-pet-form').click();
     this.petServices.addPet(addForm.value).subscribe(
       (response: Pet) => {
-        console.log(response);
         this.getPets();
         addForm.reset();
       },
@@ -85,10 +115,8 @@ export class AppComponent implements OnInit {
 
   public onUpdatePet(pet: Pet): void {
     document.getElementById('edit-pet-form').click();
-    console.log(pet)
     this.petServices.updatePet(pet).subscribe(
       (response: Pet) => {
-        console.log(response);
         this.getPets();
       },
       (error: HttpErrorResponse) => {

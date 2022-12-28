@@ -7,3 +7,16 @@ export interface Pet {
   country: string;
 
 }
+
+export interface Color {
+  id: number;
+  color: string;
+}
+export interface Type {
+  id: number;
+  type: string;
+}
+export interface Country {
+  id: number;
+  country: string;
+}
