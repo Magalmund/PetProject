@@ -76,11 +76,6 @@
               </div>
 
               <label for="type">Type</label>
-              <!--              <select (change)="changeType($event)" formControlName="type" name="type"-->
-              <!--                      class="custom-select d-block w-100" id="type" required>-->
-              <!--                <option value="">Choose...</option>-->
-              <!--                <option *ngFor="let type of Type" ngValue="type">{{type}}</option>-->
-              <!--              </select>-->
               <select formControlName="type" name="type" class="custom-select d-block w-100" id="type" required>
                 <option value="">Choose...</option>
                 <option>Cat</option>
@@ -244,7 +239,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button  type="button" id="edit-pet-form" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" id="edit-pet-form" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button [disabled]="editForm.invalid" class="btn btn-primary" type="submit">Update</button>
             </div>
           </form>

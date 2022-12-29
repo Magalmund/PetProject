@@ -12,11 +12,18 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Entity
-@Table(name = "Pets")
+@Table(name = "pet")
 public class Pet {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable=false, updatable = false)
+    @SequenceGenerator(
+            name = "pet_sequence",
+            sequenceName = "pet_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "pet_sequence"
+    )
     private Long id;
     private String petName;
     private String petCode;

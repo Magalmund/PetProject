@@ -19,11 +19,6 @@ export class AppComponent implements OnInit {
   constructor(private petServices: PetService) {
   }
 
-  /*TYPE VALIDATOR*/
-  // Type: any = ['Cat', 'Dog', 'Horse', 'Rabbit', 'Parrot']
-
-  /*TYPE VALIDATOR END*/
-
   ngOnInit(): void {
     this.getPets();
 
@@ -38,20 +33,13 @@ export class AppComponent implements OnInit {
   }
 
   /*SELECTOR FIELD VALIDATION*/
+  // Type: any = ['Cat', 'Dog', 'Horse', 'Rabbit', 'Parrot']
   // changeType(e) {
   //   console.log(e.value)
   //   this.reactiveForm.get("type").setValue(e.target.value, {
   //     onlySelf: true
   //   })
   // }
-
-  // CountryOptions = {
-  //   default: 'Choose...',
-  //   latvia: 'Latvia',
-  //   estonia: 'Estonia',
-  //   finland: 'Finland'
-  // };
-  // selectedCountry = this.CountryOptions.default
   /*SELECTOR FIELD VALIDATION END*/
 
   public getPets(): void {
@@ -66,13 +54,9 @@ export class AppComponent implements OnInit {
   }
 
   public onAddPet(addForm: FormGroupDirective): void {
-
-    console.log(this.reactiveForm);
-
     document.getElementById('add-pet-form').click();
     this.petServices.addPet(addForm.value).subscribe(
       (response: Pet) => {
-        console.log(response);
         this.getPets();
         addForm.reset();
       },
@@ -85,10 +69,8 @@ export class AppComponent implements OnInit {
 
   public onUpdatePet(pet: Pet): void {
     document.getElementById('edit-pet-form').click();
-    console.log(pet)
     this.petServices.updatePet(pet).subscribe(
       (response: Pet) => {
-        console.log(response);
         this.getPets();
       },
       (error: HttpErrorResponse) => {

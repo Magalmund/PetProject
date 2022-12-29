@@ -1,6 +1,7 @@
 package tech.getarrays.petsmanager.controllers;
 
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +13,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/pet")
 @CrossOrigin
+@AllArgsConstructor
 public class PetController {
     private final PetService petService;
-
-    public PetController(PetService petService) {
-        this.petService = petService;
-    }
 
     @GetMapping("/all")
     public ResponseEntity<List<Pet>> getAllPets () {

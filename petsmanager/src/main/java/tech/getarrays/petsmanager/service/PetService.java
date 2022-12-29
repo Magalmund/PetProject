@@ -14,6 +14,10 @@ public class PetService {
     private final PetRepo petRepo;
 
     public Pet addPet(Pet pet) {
+        Optional<Pet> petById = petRepo.findPetById(pet.getId());
+        if(petById.isPresent()){
+            throw new IllegalArgumentException("This already exist in database");
+        }
         return petRepo.save(pet);
     }
 
