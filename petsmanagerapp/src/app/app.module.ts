@@ -5,6 +5,7 @@ import {AppComponent} from './app.component';
 import {PetService} from "./pet.service";
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [PetService],
   bootstrap: [AppComponent]
